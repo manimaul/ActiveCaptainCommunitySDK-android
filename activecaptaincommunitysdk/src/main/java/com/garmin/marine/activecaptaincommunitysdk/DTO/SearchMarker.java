@@ -41,6 +41,18 @@ public class SearchMarker {
         return name;
     }
 
+    public MarkerType getMarkerType() {
+        return markerType;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
     public MapIconType getMapIcon() {
         return mapIcon;
     }

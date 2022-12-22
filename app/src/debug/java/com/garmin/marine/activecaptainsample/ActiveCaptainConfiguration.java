@@ -18,7 +18,7 @@ package com.garmin.marine.activecaptainsample;
 
 public class ActiveCaptainConfiguration {
     static final String API_BASE_URL = "https://activecaptain-stage.garmin.com/community/thirdparty/";
-    static final String API_KEY = "STAGE_API_KEY_HERE";
+    static final String API_KEY = BuildConfig.API_KEY;
     static final String SSO_URL = "https://ssotest.garmin.com/sso/embed?clientId=ACTIVE_CAPTAIN_WEB&locale=en_US";
     static final int MARKER_MIN_SEARCH_LENGTH = 3;
     static final int MARKER_MAX_SEARCH_RESULTS = 100;
