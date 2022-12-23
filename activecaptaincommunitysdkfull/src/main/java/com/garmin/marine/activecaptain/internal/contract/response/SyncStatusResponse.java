@@ -14,26 +14,33 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ------------------------------------------------------------------------------*/
 
-package com.garmin.marine.activecaptaincommunitysdk.DTO;
+package com.garmin.marine.activecaptain.internal.contract.response;
 
 import androidx.annotation.Nullable;
 
-public class LastUpdateInfoType {
-    String markerLastUpdate;
-    String reviewLastUpdate;
+import com.google.gson.annotations.SerializedName;
 
-    public LastUpdateInfoType(String markerLastUpdate, String reviewLastUpdate) {
-        this.markerLastUpdate = markerLastUpdate;
-        this.reviewLastUpdate = reviewLastUpdate;
+public class SyncStatusResponse {
+    public enum SyncStatusType {
+        Export,
+        Sync,
+        Delete,
+        None
     }
 
     @Nullable
-    public String getMarkerLastUpdate() {
-        return markerLastUpdate;
-    }
+    @SerializedName("tileX")
+    public int TileX;
 
     @Nullable
-    public String getReviewLastUpdate() {
-        return reviewLastUpdate;
-    }
+    @SerializedName("tileY")
+    public int TileY;
+
+    @Nullable
+    @SerializedName("poiUpdateType")
+    public SyncStatusType PoiUpdateType;
+
+    @Nullable
+    @SerializedName("reviewUpdateType")
+    public SyncStatusType ReviewUpdateType;
 }

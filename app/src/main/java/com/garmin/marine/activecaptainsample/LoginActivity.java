@@ -32,6 +32,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKeys;
 
+import com.garmin.marine.activecaptain.ActiveCaptainManager;
+import com.garmin.marine.activecaptain.internal.ActiveCaptainConfiguration;
+
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
@@ -61,7 +64,13 @@ public class LoginActivity extends AppCompatActivity {
 
         // Must be initialized before ActiveCaptainManager.GetInstance() is called the first time.
         String basePath = getApplicationContext().getExternalFilesDir(null).getPath();
-        ActiveCaptainManager.init(basePath, sharedPreferences);
+        final ActiveCaptainConfiguration config;
+        if (BuildConfig.DEBUG) {
+            config = ActiveCaptainConfiguration.staging(BuildConfig.API_KEY);
+        } else {
+            config = ActiveCaptainConfiguration.production(BuildConfig.API_KEY);
+        }
+        ActiveCaptainManager.init(basePath, sharedPreferences, config);
 
         if (0 != (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE)) {
             WebView.setWebContentsDebuggingEnabled(true);
@@ -103,6 +112,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        webview.loadUrl(ActiveCaptainConfiguration.SSO_URL);
+        webview.loadUrl(ActiveCaptainManager.getInstance().getConfig().getSsoUrl());
     }
 }

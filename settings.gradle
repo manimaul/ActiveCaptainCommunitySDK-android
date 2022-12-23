@@ -1,3 +1,4 @@
 include ':activecaptaincommunitysdk'
+include ':activecaptaincommunitysdkfull'
 include ':app'
 rootProject.name = "ActiveCaptain Sample"

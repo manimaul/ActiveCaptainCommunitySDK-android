@@ -25,6 +25,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.garmin.marine.activecaptain.ActiveCaptainManager;
+import com.garmin.marine.activecaptain.internal.ActiveCaptainConfiguration;
 import com.garmin.marine.activecaptaincommunitysdk.DTO.SearchMarker;
 
 public class SearchActivity extends AppCompatActivity implements ItemClickListener<SearchMarker> {
@@ -48,9 +50,10 @@ public class SearchActivity extends AppCompatActivity implements ItemClickListen
 
             @Override
             public boolean onQueryTextChange(String query) {
-                if (query.length() >= ActiveCaptainConfiguration.MARKER_MIN_SEARCH_LENGTH)
+                ActiveCaptainConfiguration config = ActiveCaptainManager.getInstance().getConfig();
+                if (query.length() >= config.getMarkerMinSearchLength())
                 {
-                    SearchMarker[] searchMarkers = ActiveCaptainManager.getInstance().getDatabase().getSearchMarkers(query, -90, -180, 90, 180, ActiveCaptainConfiguration.MARKER_MAX_SEARCH_RESULTS, false);
+                    SearchMarker[] searchMarkers = ActiveCaptainManager.getInstance().getDatabase().getSearchMarkers(query, -90, -180, 90, 180, config.getMarkerMaxSearchResults(), false);
                     markerRecyclerViewAdapter.updateSearchMarkers(searchMarkers);
                 }
 

@@ -33,6 +33,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.garmin.marine.activecaptain.ActiveCaptainManager;
+import com.garmin.marine.activecaptain.internal.ActiveCaptainConfiguration;
+
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -129,7 +132,7 @@ public class WebViewActivity extends AppCompatActivity {
 
         Map<String, String> headers = new HashMap<String, String>() {
             {
-                put("apikey", ActiveCaptainConfiguration.API_KEY);
+                put("apikey", ActiveCaptainManager.getInstance().getConfig().getApiKey());
                 put("Authorization", "Bearer " + jwt);
             }
         };
@@ -149,9 +152,9 @@ public class WebViewActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-        String webViewUrl = ActiveCaptainConfiguration.WEBVIEW_BASE_URL + "/" + url + "?" + "version=v2.1&locale=" + ActiveCaptainConfiguration.languageCode;
-        if (ActiveCaptainConfiguration.WEBVIEW_DEBUG) {
+        ActiveCaptainConfiguration config = ActiveCaptainManager.getInstance().getConfig();
+        String webViewUrl = config.getWebViewBaseUrl() + "/" + url + "?" + "version=v2.1&locale=" + config.getLanguageCode();
+        if (config.getWebViewDebug()) {
             webViewUrl += "&debug=true";
         }
         webView.loadUrl(webViewUrl, headers);
@@ -169,6 +172,7 @@ public class WebViewActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NotNull String[] permissions, @NotNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == ASK_STORAGE_PERMISSION) {
             if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 pickImage();

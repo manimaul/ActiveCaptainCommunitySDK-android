@@ -37,8 +37,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.webkit.WebViewAssetLoader;
 import androidx.webkit.WebViewAssetLoader.AssetsPathHandler;
 
+import com.garmin.marine.activecaptain.ActiveCaptainManager;
+import com.garmin.marine.activecaptain.internal.contract.BoundingBox;
 import com.garmin.marine.activecaptaincommunitysdk.DTO.AcdbUrlAction;
-import com.garmin.marine.activecaptainsample.contract.BoundingBox;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -98,7 +99,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             private boolean handleUrl(final Uri uri) {
-                AcdbUrlAction action = ActiveCaptainManager.getInstance().getDatabase().parseAcdbUrl(uri.toString(), ActiveCaptainManager.getInstance().getCaptainName(), ActiveCaptainConfiguration.REVIEW_LIST_PAGE_SIZE);
+                int pageSize = ActiveCaptainManager.getInstance().getConfig().getReviewListPageSize();
+                AcdbUrlAction action = ActiveCaptainManager.getInstance().getDatabase().parseAcdbUrl(uri.toString(), ActiveCaptainManager.getInstance().getCaptainName(), pageSize);
                 if (action != null) {
                     if (uri.getScheme().equals("acdb")) {
                         switch (action.action) {
@@ -141,7 +143,8 @@ public class MainActivity extends AppCompatActivity {
                 WebResourceResponse response = null;
 
                 if (uri.getScheme().equals("acdb")) {
-                    AcdbUrlAction action = ActiveCaptainManager.getInstance().getDatabase().parseAcdbUrl(uri.toString(), ActiveCaptainManager.getInstance().getCaptainName(), ActiveCaptainConfiguration.REVIEW_LIST_PAGE_SIZE);
+                    int pageSize = ActiveCaptainManager.getInstance().getConfig().getReviewListPageSize();
+                    AcdbUrlAction action = ActiveCaptainManager.getInstance().getDatabase().parseAcdbUrl(uri.toString(), ActiveCaptainManager.getInstance().getCaptainName(), pageSize);
                     if (action != null) {
                         switch (action.action) {
                             case SHOW_SUMMARY:

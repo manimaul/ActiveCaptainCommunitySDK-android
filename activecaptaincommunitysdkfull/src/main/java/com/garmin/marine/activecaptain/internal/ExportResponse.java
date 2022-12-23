@@ -14,26 +14,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ------------------------------------------------------------------------------*/
 
-package com.garmin.marine.activecaptaincommunitysdk.DTO;
+package com.garmin.marine.activecaptain.internal;
 
-import androidx.annotation.Nullable;
+import com.google.gson.annotations.SerializedName;
 
-public class LastUpdateInfoType {
-    String markerLastUpdate;
-    String reviewLastUpdate;
+public class ExportResponse {
+    public static class ExportFile {
+        @SerializedName("fileSize")
+        public int fileSize;
 
-    public LastUpdateInfoType(String markerLastUpdate, String reviewLastUpdate) {
-        this.markerLastUpdate = markerLastUpdate;
-        this.reviewLastUpdate = reviewLastUpdate;
+        @SerializedName("md5Hash")
+        public String md5Hash;
+
+        @SerializedName("url")
+        public String url;
     }
 
-    @Nullable
-    public String getMarkerLastUpdate() {
-        return markerLastUpdate;
-    }
+    @SerializedName("tileX")
+    public int tileX;
 
-    @Nullable
-    public String getReviewLastUpdate() {
-        return reviewLastUpdate;
-    }
+    @SerializedName("tileY")
+    public int tileY;
+
+    @SerializedName("zip")
+    public ExportFile zip;
+
+    @SerializedName("gzip")
+    public ExportFile gzip;
 }
